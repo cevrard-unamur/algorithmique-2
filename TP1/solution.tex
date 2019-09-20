@@ -1,6 +1,8 @@
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
-\title{TP 1 - Exercices pratiques}
+\title{IHDCB331 - Algorithmique II\\
+	\large{TP 1 - Exercices pratiques}
+}
 \author{Cédric Evrard}
 \begin{document}
 
@@ -26,13 +28,22 @@
 
 \textbf{Question 3}
 \begin{enumerate}
-	\item $\forall i, 0 \leq i < n, a[i] = 0$
-	\item $\forall i, \forall j, 0 \leq i, j < 0, a[i] \neq a[j]$
-	\item $\forall i, 0 \leq i < n, a[i]\ mod\ 2 = 0$
-	\item $\exists i, 0 \leq i < n, a[i] = 0$
-	\item $\forall i, 0 \leq i < n, a[i]\ mod\ 2 = 0 \Rightarrow a[i] < 10  $
-	\item $\forall i, 0 \leq i < n, a[i]\ mod\ 2 = 0 \Rightarrow i\ mod\ 2 = 0$
-	\item $\forall i, \forall j, 0 \leq i < j < 0, a[i] \leq a[j]$
+	\item $\forall i : 0 \leq i < n : a[i] = 0$
+	\item $\forall i, \forall j : 0 \leq i, j < 0 : a[i] \neq a[j]$
+	\item $\forall i : 0 \leq i < n : a[i]\ mod\ 2 = 0$
+	\item $\exists i : 0 \leq i < n : a[i] = 0$
+	\item $\forall i : 0 \leq i < n : a[i]\ mod\ 2 = 0 \Rightarrow a[i] < 10  $
+	\item $\forall i : 0 \leq i < n : a[i]\ mod\ 2 = 0 \Rightarrow i\ mod\ 2 = 0$
+	\item $\forall i, \forall j : 0 \leq i < j < 0 : a[i] \leq a[j]$
+\end{enumerate}
+
+\textbf{Question 4}
+\begin{enumerate}
+	\item $\forall i : \exists x : 0 \leq i < n : x \leq a[i] $ 
+	\item $\{a[i]\ |\ 0 \leq i < n \} \subseteq \{b[j]\ |\ 0 \leq j < m \}$
+	\item $\{a[i]\ |\ 0 \leq i < n \} \cap \{b[j]\ |\ 0 \leq j < m \} = \emptyset$  
+	\item $\{a[i]\ |\ 0 \leq i < n \} \setminus \{b[j]\ |\ 0 \leq j < m \} \neq \emptyset$ 
+	\item $\#\{a[i]\ |\ 0 \leq i < n \} \leq 5$
 \end{enumerate}
 
 \end{document}
