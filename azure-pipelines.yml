@@ -13,3 +13,6 @@ steps:
 - bash: | 
     sudo apt-get install texlive     
     pdflatex TP1/solution.tex
+
+- publish: $(Build.ArtifactStagingDirectory)
+  artifact: drop
