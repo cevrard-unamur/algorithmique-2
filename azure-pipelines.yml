@@ -12,7 +12,7 @@ pool:
 steps:
 - bash: | 
     sudo apt-get install texlive     
-    pdflatex TP1/solution.tex
+    pdflatex */*.tex
 
-- publish: $(Build.SourcesDirectory)
+- publish: $(Build.SourcesDirectory)\*.pdf
   artifact: drop
