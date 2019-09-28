@@ -14,5 +14,5 @@ steps:
     sudo apt-get install texlive     
     pdflatex */*.tex
 
-- publish: $(Build.SourcesDirectory)\*.pdf
+- publish: $(Build.SourcesDirectory)
   artifact: drop
