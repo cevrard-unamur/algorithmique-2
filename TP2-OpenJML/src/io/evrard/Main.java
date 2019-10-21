@@ -13,6 +13,21 @@ public class Main {
       @*/
     int[] arrayDistinct = { 1, 2, 3, 4 };
 
+    /*@
+      @ public normal_behavior
+      @ requires array != null && array.length >= 0;
+      @ ensures \result == (\sum int i; 0 <=i && i < array.length; array[i]);
+     */
+    public int sum(int [] array) {
+        int result = 0;
+
+        for (int i = 0; i < array.length; i++) {
+            result += array[i];
+        }
+
+        return result;
+    }
+
     public static void main(String[] args) {
         System.out.println("Hello");
     }
