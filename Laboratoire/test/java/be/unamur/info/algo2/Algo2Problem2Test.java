@@ -69,7 +69,7 @@ public class Algo2Problem2Test {
     }
 
     private static String[] loadResult(String path) throws Exception {
-        return new Main().problem_2_naive(FileHelper.getFileText(path));
+        return new Main().problem_2(FileHelper.getFileText(path));
     }
 
     private static void testFile(String filePath) throws Exception {
