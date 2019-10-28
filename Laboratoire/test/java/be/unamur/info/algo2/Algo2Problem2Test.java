@@ -40,32 +40,47 @@ public class Algo2Problem2Test {
 
     @Test
     public void test_problem_2_empty_file() throws Exception {
+        Algo2Problem2Test.testFile("src/test/resources/problem2/EmptyFileTest");
         Algo2Problem2Test.testFileNaive("src/test/resources/problem2/EmptyFileTest");
     }
 
     @Test
     public void test_problem_2_incorrect_number_of_tests() throws Exception {
+        Algo2Problem2Test.testFile("src/test/resources/problem2/IncorrectNumberOfTests");
         Algo2Problem2Test.testFileNaive("src/test/resources/problem2/IncorrectNumberOfTests");
     }
 
     @Test
     public void test_problem_2_negative_number_of_tests() throws Exception {
+        Algo2Problem2Test.testFile("src/test/resources/problem2/NegativeNumberOfTests");
         Algo2Problem2Test.testFileNaive("src/test/resources/problem2/NegativeNumberOfTests");
     }
 
     @Test
     public void test_problem_2_incorrect_map_1() throws Exception {
+        Algo2Problem2Test.testFile("src/test/resources/problem2/IncorrectMap1");
         Algo2Problem2Test.testFileNaive("src/test/resources/problem2/IncorrectMap1");
     }
 
     @Test
     public void test_problem_2_incorrect_map_2() throws Exception {
+        Algo2Problem2Test.testFile("src/test/resources/problem2/IncorrectMap2");
         Algo2Problem2Test.testFileNaive("src/test/resources/problem2/IncorrectMap2");
     }
 
     @Test
     public void test_problem_2_incorrect_map_3() throws Exception {
+        Algo2Problem2Test.testFile("src/test/resources/problem2/IncorrectMap3");
         Algo2Problem2Test.testFileNaive("src/test/resources/problem2/IncorrectMap3");
+    }
+
+    @Test
+    public void test_problem_2_jenkins_test1() throws Exception{
+        Algo2Problem2Test.testFile("src/test/resources/problem2/JenkinsTests/test1");
+    }
+    @Test
+    public void test_problem_2_jenkins_test2() throws Exception{
+        Algo2Problem2Test.testFile("src/test/resources/problem2/JenkinsTests/test2");
     }
 
     private static String[] loadResult(String path) throws Exception {

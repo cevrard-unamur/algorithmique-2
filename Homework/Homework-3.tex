@@ -24,7 +24,9 @@
   stringstyle=\color{pred},
   basicstyle=\ttfamily,
   moredelim=[il][\textcolor{pgrey}]{$$},
-  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%},
+  tabsize=4,
+  literate={\ \ }{{\ }}1
 }
 
 \title{IHDCB331 - Algorithmique II\\
@@ -44,7 +46,7 @@
   @             a[i] == 0);
   @*/
 \end{lstlisting}
-	\item Tous les éléments de a sont distincs
+	\item Tous les éléments de a sont distincts
 \begin{lstlisting}
  /*@ invariant (\forall int i;
    @             i >= 0 && i < arrayDistinct.length;
@@ -58,7 +60,7 @@
    @             a[i] % 2 == 0);
    @*/
 \end{lstlisting}
-	\item Tous les nombres de a sont ingérieurs ou égaux à 2
+	\item Tous les nombres de a sont inférieurs ou égaux à 2
 \begin{lstlisting}
  /*@ invariant (\forall int i;
    @             i >= 0 && i < a.length;
@@ -72,7 +74,7 @@
    @             (a[i] % 2 == 0 && a[i] < 10) || a[i] % 2 != 0);
    @*/
 \end{lstlisting}
-	\item Il exist eune valeur zéro dans a[i], a[i + 1], ... a[j]
+	\item Il existe une valeur zéro dans a[i], a[i + 1], ... a[j]
 \begin{lstlisting}
  /*@ invariant (\exists int i;
    @             i >= 0 && i < j;
@@ -88,7 +90,11 @@
 \end{lstlisting}
 	\item x est le minium de a
 \begin{lstlisting}
-
+/*@ normal_behavior
+  @ assignale \nothing;
+  @ ensures \forall (int i; i >= 0 && i < a.length; a[i] >= \result);
+  @ ensures \exists (int i; i >= 0 && i < a.length; a[i] == \result);
+  @*/
 \end{lstlisting}
 \end{enumerate}
 
@@ -96,14 +102,14 @@
 \begin{enumerate}
 	\item \textbf{double} max(\textbf{double} x, \textbf{double} y)
 \begin{lstlisting}
-/*@ public normal_behavior;
-  @ assignables \nothing;
-  @ ensures \result == (x > y ? x : y);
+/*@ normal_behavior
+  @ assignable \nothing;
+  @ ensures (a > b && \result == a) || (a <= b && \result == b);
   @*/
 \end{lstlisting}
 	\item \textbf{boolean} contient(\textbf{double} [] a, \textbf{double} x)
 \begin{lstlisting}
-/*@ public normal_behavior;
+/*@ normal_behavior
   @ assignable \nothing;
   @ ensures \result == (\exists int i;
   @		i >= 0 && i < a.length;
@@ -112,7 +118,7 @@
 \end{lstlisting}
 	\item \textbf{double} max(\textbf{double} [] a)
 \begin{lstlisting}
-/*@ public normal_behavior;
+/*@ normal_behavior
   @ assignale \nothing;
   @ ensures \forall (int i; i >= 0 && i < a.length; a[i] <= \result);
   @ ensures \exists (int i; i >= 0 && i < a.length; a[i] == \result);
@@ -120,7 +126,7 @@
 \end{lstlisting}
 	\item \textbf{int} factorielle(\textbf{int} n)
 \begin{lstlisting}
-/*@ public normal_behavior;
+/*@ normal_behavior
   @ assignable \nothing;
   @ requires n >= 1;
   @ ensures \result == (\product int i; i >= 1 && i <= n; i);
@@ -128,7 +134,7 @@
 \end{lstlisting}
 	\item \textbf{int} intSqrt(\textbf{int} n)
 \begin{lstlisting}
-/*@ public normal_behavior;
+/*@ normal_behavior
   @ assignable \nothing;
   @ requires n >= 0;
   @ ensures \result * \result <= n;
@@ -141,7 +147,7 @@
 \section{Question 10}
 La question 10 se base sur la signature de la méthode suivante : \textit{public boolean enLigne(int[] a, int n, int x)} où le tableau de \textbf{String} à été remplacé par un tableau de \textbf{int}
 \begin{lstlisting}
-/*@ public normal_behavior;
+/*@ normal_behavior
   @ assignable \nothing;
   @ ensures \result == (\exists int i; i >= 0 && i < a.length - n;
   @		(\forall int j; j >= i && j <= i + n; a[j] == x));
@@ -150,7 +156,7 @@ La question 10 se base sur la signature de la méthode suivante : \textit{public
 
 \section{Question 12}
 \begin{lstlisting}
-/*@ public normal_behavior;
+/*@ normal_behavior
   @ assignable \nothing;
   @ ensures \result == (\sum int i; i >= 0 && i < l; a[i]);
   @*/
@@ -172,11 +178,72 @@ public boolean int somme(int[] a, int l) {
 \end{lstlisting}
 
 \section{Question 13}
-a
+\begin{lstlisting}
+/*@ normal_behavior
+  @ assignable \nothing;
+  @ ensures \result == m + n
+  @*/
+public int somme (int m, int n) {
+	int res = m;
+	int i = 0;
+	
+	/*@ loop_invariant i >= 0 && i < n;
+	  @ loop_invariant res == \old(res) + 1 && i = \old(i) + 1;
+	  @ decreases n - i
+	  @*/
+	while (i < n) {
+		res = res + 1;
+		i = i + 1;
+	}
+	
+	return res; // Correction par rapport a l'enonce ou une variable result qui n'existe pas est retournee
+}	
+\end{lstlisting}
 
 \section{Question 15}
-b
+\begin{lstlisting}
+/*@ normal_behavior
+  @ assignable nothing;
+  @ requires true;
+  @ ensures (a > b && \result == a) || (a <= b && \result == b)
+  @*/
+int max(int a, int b) {
+	if (a > b) {
+		return a;
+	} else {
+		return b;
+	}
+}
+\end{lstlisting}
 
 \section{Question 22}
-c
+\begin{lstlisting}
+public class Tri {
+	
+	/*@ normal_behavior
+	  @ assignable a;
+	  @ ensures \forall int i; i >= 0 && i < a.length - 1; a[i] < a[i + 1]
+	  @*/
+	static void tri(int[] a) {
+		boolean tri;
+		
+		/*@ loop_invariant trie == true && \forall int j; j >= 0 && j < a.length - 1; a[j] < a[j + 1]
+		  @ loop_invariant trie == false && \exists int j; j >= 0 && j < a.length - 1; a[j] > a[j + 1]
+		  @*/
+		do {
+			trie = true;
+			
+			/*@ loop_invariant i >= 0 && i <= a.length - 1;
+		  	  @ loop_invariant trie == true && \forall int j; j >= 0 && j < i - 1; a[j] < a[j + 1]
+		  	  @ loop_invariant trie == false && \exists int j; j >= 0 && j < i - 1; a[j] > a[j + 1]
+		  	  @*/
+			for (int i = 0; i < a.length - 1; i++) {
+				if (a[i] > a[i + 1]) {
+					/* ... */
+				}
+			}
+		} while (!trie)
+	}
+} 
+\end{lstlisting}
 \end{document}
