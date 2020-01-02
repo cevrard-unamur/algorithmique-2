@@ -1,0 +1,11 @@
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/bin/Debug/netcoreapp3.1/question4
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/bin/Debug/netcoreapp3.1/question4.deps.json
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/bin/Debug/netcoreapp3.1/question4.runtimeconfig.json
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/bin/Debug/netcoreapp3.1/question4.runtimeconfig.dev.json
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/bin/Debug/netcoreapp3.1/question4.dll
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/bin/Debug/netcoreapp3.1/question4.pdb
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/obj/Debug/netcoreapp3.1/question4.csprojAssemblyReference.cache
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/obj/Debug/netcoreapp3.1/question4.AssemblyInfoInputs.cache
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/obj/Debug/netcoreapp3.1/question4.AssemblyInfo.cs
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/obj/Debug/netcoreapp3.1/question4.dll
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/obj/Debug/netcoreapp3.1/question4.pdb
