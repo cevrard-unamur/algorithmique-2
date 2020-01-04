@@ -1,0 +1,46 @@
+﻿<Properties StartupConfiguration="{743B7119-8CD2-460D-8E41-C4775DD866FF}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Tests/SolverTest.cs">
+    <Files>
+      <File FileName="Carton/Program.cs" Line="13" Column="1" />
+      <File FileName="Carton/Carton.cs" Line="9" Column="68" />
+      <File FileName="Carton/Wrapper.cs" Line="13" Column="1" />
+      <File FileName="Tests/SolverTest.cs" Line="35" Column="21" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="question4" expanded="True">
+            <Node name="Question" expanded="True" />
+            <Node name="Tests" expanded="True">
+              <Node name="Dependencies" expanded="True" />
+              <Node name="SolverTest.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="question4" expanded="True">
+            <Node name="Tests" expanded="True">
+              <Node name="Tests" expanded="True">
+                <Node name="SolverTest" expanded="True">
+                  <Node name="CaseOneTest" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Question PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

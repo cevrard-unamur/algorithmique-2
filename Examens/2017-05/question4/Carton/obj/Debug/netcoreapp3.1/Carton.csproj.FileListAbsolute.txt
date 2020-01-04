@@ -1,0 +1,3 @@
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/Carton/obj/Debug/netcoreapp3.1/Carton.csprojAssemblyReference.cache
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/Carton/obj/Debug/netcoreapp3.1/Carton.AssemblyInfoInputs.cache
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/Carton/obj/Debug/netcoreapp3.1/Carton.AssemblyInfo.cs

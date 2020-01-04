@@ -1,0 +1,10 @@
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/Carton/obj/Debug/netcoreapp3.1/Question.AssemblyInfoInputs.cache
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/Carton/obj/Debug/netcoreapp3.1/Question.AssemblyInfo.cs
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/Carton/bin/Debug/netcoreapp3.1/Question
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/Carton/bin/Debug/netcoreapp3.1/Question.deps.json
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/Carton/bin/Debug/netcoreapp3.1/Question.runtimeconfig.json
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/Carton/bin/Debug/netcoreapp3.1/Question.runtimeconfig.dev.json
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/Carton/bin/Debug/netcoreapp3.1/Question.dll
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/Carton/bin/Debug/netcoreapp3.1/Question.pdb
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/Carton/obj/Debug/netcoreapp3.1/Question.dll
+/Users/patmol/repos/algorithmique-2/Examens/2017-05/question4/Carton/obj/Debug/netcoreapp3.1/Question.pdb

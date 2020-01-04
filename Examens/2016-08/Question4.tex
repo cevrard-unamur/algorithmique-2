@@ -1,0 +1,166 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper, margin=1in]{geometry} %% margins
+\usepackage{natbib} %% References
+\usepackage{graphicx} %http://en.wikibooks.org/wiki/LaTeX/Importing_Graphics#Graphics_storage
+\usepackage[export]{adjustbox}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{tikz}
+\usepackage{color}
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\usepackage{listings}
+\lstset{language=Java,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  commentstyle=\color{pgreen},
+  keywordstyle=\color{pblue},
+  stringstyle=\color{pred},
+  basicstyle=\ttfamily,
+  moredelim=[il][\textcolor{pgrey}]{$$},
+  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%},
+  tabsize=2,
+  backgroundcolor=\color{backcolour},
+  numbers=left,                    
+  numbersep=5pt
+}
+\usepackage{amsmath,amsfonts,amssymb}	% AMS mathematical facilities, fonts and symbols
+
+
+\begin{document}
+
+\title{Examen août 2016 - Question 4}
+\author{Cédric Evrard}
+\date{\today}
+
+\maketitle
+
+\section{Analyse de l'énoncé}
+
+Il faut comprendre que lors d'une découpe, on traverse toutes de toutes les "sous-planches" qui ont déjà été découpées dans l'autre direction.
+
+Ce nombre de planches (ou de découpe + 1) doit être multiplié par le coût de la découpe.
+
+Il faut réaliser une découpe de chaque prix donné, dans n'importe quel ordre, pour avoir le coût total minimum.
+
+\section{Spécification du problème}
+
+Nous aurons deux tableaux, un pour les découpes verticales et un pour les découpes horizontales, contenant le nombre de découpes qui ont été faites par rapport au prix au même indice dans le tableau des prix.
+
+Deux variables seront créées avec le nombre de découpes effectuées dans chaque sens (initialisées à 0) et une variable avec la somme totale des découpes.
+
+\begin{lstlisting}[caption=Spécification JML de la question 4, label={lst:pre_question4}]
+/*@
+  @ normal_behavior;
+  @ assignable \nothing;
+  @ requires verticalPrices != null && horizontalPrices != null
+  @ requires (\forall int i; i < verticalPrices.length; verticalPrices[i] > 0);
+  @ requires (\forall int i; i < horizontalPrices.length; horizontalPrices[i] > 0);
+  @ ensures \result == (\sum int i; i < verticalCuts.length; verticalPrices[i] * verticalCuts[i]) + (\sum int i; i < horizontalCuts.length; horizontalPrices[i] * horizontalCuts[i]);
+  @*/
+\end{lstlisting}
+
+\section{Choix et étapes de la méthode}
+
+Pour réaliser le calcul du coût le plus faible, nous allons utiliser un algorithme glouton. La contrainte sur nos découpes sera de prendre celle dont le coût est le plus élevé (que ce soit verticalement ou horizontalement.)
+
+En cas de découpe ayant le même coût, on choisit en premier celle dont le nombre de découpes dans le sens opposé est le plus faible.
+
+Les étapes de la résolution peuvent donc être résumées comme ceci
+
+\begin{enumerate}
+	\item Trie des descendants des tableaux de prix.
+	\item Récupération de l'élément ayant le coût le plus élevé dans les tableaux
+	\item Multiplication du nombre de découpes par le coût
+	\item Ajout de la somme au total 
+\end{enumerate}
+
+\section{Construction de l'algorithme}
+
+\begin{lstlisting}[caption=Algorithme de résolution du problème, label={lst:algo}]
+public class Solver {
+    private static int currentVerticalCuts = 1;
+    private static int currentHorizontalCuts = 1;
+
+    private static int currentVerticalPriceIndex = 0;
+    private static int currentHorizontalPriceIndex = 0;
+
+    private static int totalPrice = 0;
+
+    public static int GetBestPrice(Integer[] verticalPrices, Integer[] horizontalPrices) {
+        currentVerticalCuts = 1;
+        currentHorizontalCuts = 1;
+        currentVerticalPriceIndex = 0;
+        currentHorizontalPriceIndex = 0;
+
+        totalPrice = 0;
+
+        Comparator<Object> cms = Collections.reverseOrder();
+
+        Arrays.sort(verticalPrices, cms);
+        Arrays.sort(horizontalPrices, cms);
+
+        for (int i = 0; i < verticalPrices.length + horizontalPrices.length; i++) {
+            if (currentHorizontalPriceIndex == horizontalPrices.length || currentVerticalPriceIndex == verticalPrices.length) {
+                if (currentVerticalPriceIndex < verticalPrices.length) {
+                    HandleCut(verticalPrices, horizontalPrices, Direction.Vertical);
+                }
+                if (currentHorizontalPriceIndex < horizontalPrices.length) {
+                    HandleCut(verticalPrices, horizontalPrices, Direction.Horizontal);
+                }
+            } else {
+                if (verticalPrices[currentVerticalPriceIndex] > horizontalPrices[currentHorizontalPriceIndex]) {
+                    HandleCut(verticalPrices, horizontalPrices, Direction.Vertical);
+                } else if (horizontalPrices[currentHorizontalPriceIndex] > verticalPrices[currentVerticalPriceIndex]) {
+                    HandleCut(verticalPrices, horizontalPrices, Direction.Horizontal);
+                } else {
+                    if (currentVerticalCuts <= currentHorizontalCuts) {
+                        HandleCut(verticalPrices, horizontalPrices, Direction.Vertical);
+                    } else {
+                        HandleCut(verticalPrices, horizontalPrices, Direction.Horizontal);
+                    }
+                }
+            }
+        }
+
+        return  totalPrice;
+    }
+
+    private static void HandleCut(Integer[] verticalPrices, Integer[] horizontalPrices, Direction direction) {
+        switch (direction) {
+            case Vertical:
+                totalPrice += verticalPrices[currentVerticalPriceIndex] * currentHorizontalCuts;
+                currentVerticalCuts++;
+                currentVerticalPriceIndex++;
+                break;
+            case Horizontal:
+                totalPrice += horizontalPrices[currentHorizontalPriceIndex] * currentVerticalCuts;
+                currentHorizontalCuts++;
+                currentHorizontalPriceIndex++;
+                break;
+        }
+    }
+}
+\end{lstlisting}
+
+\section{Ordre de grandeur de l'algorithme}
+
+Nous avons une boucle principale (Ligne 23 - Listing \ref{lst:algo}). Cette boucle ne contient que des opérations qui sont effectuées en $\mathcal{O}(1)$.
+
+La boucle prend un temps $\mathcal{O}(m + n)$, qui est l'addition de la longueur des deux tableaux des prix.
+
+Nous avons donc un algorithme qui possède une complexité temporelle de $\mathcal{O}(m + n)$.
+
+Pour l'espace en mémoire, nous avons les deux tableaux fourni qui possèdent la liste des prix ainsi que 5 variables entières.
+Nous pouvons donc dire que nous avons une complexité en place mémoire de  $\mathcal{O}(m + n)$ où $m$ et $n$ ont la même signification que pour la complexité temporelle.
+
+\end{document}
+
