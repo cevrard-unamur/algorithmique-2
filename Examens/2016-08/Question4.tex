@@ -57,6 +57,8 @@ Nous aurons deux tableaux, un pour les découpes verticales et un pour les déco
 
 Deux variables seront créées avec le nombre de découpes effectuées dans chaque sens (initialisées à 0) et une variable avec la somme totale des découpes.
 
+Voici la spécification de la pré- et post- condition de l'algorithme\footnote{Il manque un \emph{ensures} pour indiquer que la solution trouvée est bien la plus petite mais je ne vois pas comment l'écrire, donc si vous avez une idée, je suis preneur :-)}.
+
 \begin{lstlisting}[caption=Spécification JML de la question 4, label={lst:pre_question4}]
 /*@
   @ normal_behavior;
@@ -77,7 +79,7 @@ En cas de découpe ayant le même coût, on choisit en premier celle dont le nom
 Les étapes de la résolution peuvent donc être résumées comme ceci
 
 \begin{enumerate}
-	\item Trie des descendants des tableaux de prix.
+	\item Trie en ordre descendants des éléments des tableaux de prix.
 	\item Récupération de l'élément ayant le coût le plus élevé dans les tableaux
 	\item Multiplication du nombre de découpes par le coût
 	\item Ajout de la somme au total 
@@ -103,10 +105,8 @@ public class Solver {
 
         totalPrice = 0;
 
-        Comparator<Object> cms = Collections.reverseOrder();
-
-        Arrays.sort(verticalPrices, cms);
-        Arrays.sort(horizontalPrices, cms);
+        Arrays.sort(verticalPrices, Collections.reverseOrder());
+        Arrays.sort(horizontalPrices, Collections.reverseOrder());
 
         for (int i = 0; i < verticalPrices.length + horizontalPrices.length; i++) {
             if (currentHorizontalPriceIndex == horizontalPrices.length || currentVerticalPriceIndex == verticalPrices.length) {
@@ -153,11 +153,13 @@ public class Solver {
 
 \section{Ordre de grandeur de l'algorithme}
 
-Nous avons une boucle principale (Ligne 23 - Listing \ref{lst:algo}). Cette boucle ne contient que des opérations qui sont effectuées en $\mathcal{O}(1)$.
+Les deux tris s'effectuent en un temps $\mathcal{O}(n log{n})$ (Ligne 18- Listing \ref{lst:algo}) et $\mathcal{O}(m log{m})$ (Ligne 19- Listing \ref{lst:algo}).
+
+Ensuite, nous avons une boucle principale (Ligne 23 - Listing \ref{lst:algo}). Cette boucle ne contient que des opérations qui sont effectuées en $\mathcal{O}(1)$.
 
 La boucle prend un temps $\mathcal{O}(m + n)$, qui est l'addition de la longueur des deux tableaux des prix.
 
-Nous avons donc un algorithme qui possède une complexité temporelle de $\mathcal{O}(m + n)$.
+Nous avons donc un algorithme qui possède une complexité temporelle de $\mathcal{O}(n log n)$ ou $n$ est la valeur du plus long tableau.
 
 Pour l'espace en mémoire, nous avons les deux tableaux fourni qui possèdent la liste des prix ainsi que 5 variables entières.
 Nous pouvons donc dire que nous avons une complexité en place mémoire de  $\mathcal{O}(m + n)$ où $m$ et $n$ ont la même signification que pour la complexité temporelle.

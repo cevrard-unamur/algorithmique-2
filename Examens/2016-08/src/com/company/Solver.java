@@ -21,10 +21,8 @@ public class Solver {
 
         totalPrice = 0;
 
-        Comparator<Object> cms = Collections.reverseOrder();
-
-        Arrays.sort(verticalPrices, cms);
-        Arrays.sort(horizontalPrices, cms);
+        Arrays.sort(verticalPrices, Collections.reverseOrder());
+        Arrays.sort(horizontalPrices, Collections.reverseOrder());
 
         for (int i = 0; i < verticalPrices.length + horizontalPrices.length; i++) {
             if (currentHorizontalPriceIndex == horizontalPrices.length || currentVerticalPriceIndex == verticalPrices.length) {
