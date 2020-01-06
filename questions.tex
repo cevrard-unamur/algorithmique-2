@@ -1,6 +1,7 @@
 \documentclass[11pt]{article}
 
 \usepackage[utf8]{inputenc}
+\usepackage{amsmath}
 \usepackage[a4paper, margin=1in]{geometry}
 \usepackage{tikz}
 \usepackage{color}
@@ -57,7 +58,15 @@ Un invariant de données désigne un ensemble de propriété sur les données co
 
 \subsection{Définissez le type abstrait dictionnaire}
 
-Un dictionnaire est un ensemble dynamique d'éléments avec des clés comparables qui supportent différentes opérations comme par exemple $search(S, k)$, $insert(S, k)$, $delete(S, k)$ ou $S$ représente l'ensemble et $k$ un élément du même type que l'ensemble.
+Un dictionnaire $S$ est un ensemble dynamique d'éléments $x \in U$ avec des clés $k \in \varepsilon$ comparables: on peut supposer qu'il existe un ordre total sur les clés. Un description fonctionnelle de ses opérations est :
+
+\begin{itemize}
+	\item search: $S \times \varepsilon \mapsto U$,
+	\item insert: $S \times U \times \varepsilon \mapsto void$
+	\item delete: $S \times U \mapsto void$
+\end{itemize} 
+
+Le dictionnaire est aussi un object conteneur. Il n'a quand à lui aucune structure ordonnée, à la différence des listes. De plus, pour accéder aux objects contenus dans le dictionnaire, on n'utilise pas nécessairement des indices mais des \textbf{clés} qui peuvent être des types distincts. 
 
 \subsection{Décrivez brièvement une implémentation du dictionnaire par une variante des arbres binaires}
 
@@ -66,9 +75,6 @@ L’implémentation devra vérifier plusieurs points pour permettre l’impléme
 \subsection{Décrivez brièvement une implémentation du dictionnaire par une variante des arbres R/N}
 
 Les arbres RN sont des arbres binaires de recherche (= nœuds internes sont énumérés lors d’un parcours infixe - gauche, nœud, droite - en ordre croissant de clés – le plus petit est le plus à gauche de l’arbre gauche, la plus grande à droite de l’arbre de droite) où chaque nœud est rouge ou noir, la racine est noire, chaque sous-arbre vide est noir, un nœud rouge a 2 enfants noirs et tous les chemins partant de la racine jusqu’à une feuille contiennent le même nombre de nœuds noirs (appelé hauteur noir).
-
-\subsection{Donnez une implémentation du dictionnaire par un arbre binaire (trié)}
-\subsubsection{Invariant de représentation, invariant de données et fonction d'abstraction}
 
 \subsubsection{Montrer le caclul des pré- et post-condition de la fonction concrète d'ajout}
 
@@ -89,22 +95,20 @@ Il s'agit d'une fonction qui lie les valeurs concrètes aux valeurs abstraites d
 
 Le gros avantage de la spécification d’une fonction abstraite est qu’elle ne présuppose pas du comment son implémentation doit se faire. En effet, les pré- et post- sont des contraintes qui doivent être respectées par la fonction. La pré- et la post- de l’implémentation reprend la pré- et la post- de la fonction d’un TA.
 
-\subsection{Qu'est ce que l'encapsulation d'un TA ?}
-
-Le principe de l’encapsulation est de protéger les données en veillant à ce qu’elles ne soient changées que par les sous-programmes de l’interface, ce qui garantit l’invariant des données.
-
 \subsection{Qu'appelle-t-on la propriété de sous-solution optimale ?}
 
 La propriété de sous-solution optimale est utilisée en programmation dynamique lorsqu'il est possible de diviser un problème en sous-problème en calculant une solution pour chacun de ces sous-problèmes. Ces sous-problèmes sont ensuite recombinées pour former une solution globale optimale au problème de départ.
 
 \subsection{Expliquer le principe de la preuve d'optimalité d'un algorithme glouton ?}
 
-La solution est optimale à condition que :
+Pour garantir une solution optimale, il faut:
 
 \begin{itemize}
-	\item Le choix localement optimal fait partie d'une solution globale optimale
-	\item Il s'agit d'un choix optimal pour un sous-problème (sous-structure optimale)
+	\item Que la propriété de sous-stucture optimale soit vérifiée (c'est à dire qu'il s'agisse d'un choix optimal pour un sous-problème donné);
+	\item Que le choix localement optimal (qui semble le meilleur sur le moment) fasse partie de la solution globalement optimale.
 \end{itemize}
+
+Autrement dit, le choix local doit correspondre à la solution optimale de chaque sous-problème.
 
 \subsection{Expliquer le principe de mémoïsation}
 
@@ -133,10 +137,12 @@ Il s'agit d'un ensemble de propositions portant sur les attributs de la classe. 
 public List<E> intersection<E>(List<E> ensemble1, List<E> ensemble2) {
 	List<E> result = new ArrayList<E>();
 	
-	for (int i = 0; i < ensemble1.length; i++) {
-		if (ensemble2.indexOf(ensemble1.get(i)) != -1) {
-			result.push(ensemble1.get(i));
-		}
+	int j = 0;
+	
+	for (int i = 0; i < ensemble1.size(); i++) {
+		int integer = ensemble1.get(i);
+		while (j <= ensemble2.size() && ensemble2.get(j) < integer j++;
+		if (ensemble2.get(i).equals(integer)) result.add(integer);
 	}
 	
 	return result;
@@ -145,9 +151,7 @@ public List<E> intersection<E>(List<E> ensemble1, List<E> ensemble2) {
 
 \subsubsection{Quel est l'ordre de grandeur de son temp d'exécution ?}
 
-Le temps d'exécution va dépendre de la fonction indexOf(). Si celle-ci parcours simplement le tableau à la recherche de l'élément, le temps d'exécution sera $\mathcal{O}(n^2)$
-
-\subsection{Comment peut-on relier un invariant de représentation et sa fonction d'abstraction ?}
+Sachant que la liste est triée, nous n'avons pas à recommencer la lecture de la deuxième liste à partir de 0. Celle-ci ne sera donc lue qu'une seule fois sur l'ensemble des \emph{for}. Nous avons donc un ordre de grandeur de $\mathcal{O}(n)$ 
 
 \subsection{Expliquer le principe de la méthode "générer et tester"}
 
@@ -161,12 +165,239 @@ La fonction d'abstraction ne va pas changer. Par contre, l'invariant de données
 
 \subsection{Expliquez comment utiliser diviser pour régner pour calculer la puissance x d'un nombre}
 
+Si $n \in N$, deux approches sont possibles:
+
+\begin{itemize}
+	\item "1 élément et le reste" (D1) consiste à calculer $x^n = x \times x^{n-1}$, $x^{n-1}$ étant lui même calculé sur le même principe, et ainsi de suite jusqu'au cas de base $x^0 = 1$. La complexité de cette approche étant $\mathcal{O}(n)$
+	\item "Deux moitiés égales" (D2) consiste à calculer $x^n = x^{\lfloor n/2\rfloor} \times x^{\lceil n/2 \rceil}$, les éléments du produit étant eux-mêmes calculés récursivement jusqu'au cas de base, $x^1 = x$ et $x^0 = 1$. La complexité de cette approche étant $\mathcal{O}(log_2{n})$
+\end{itemize}
+
 \subsection{Expliquer la programmation dynamique}
 
 La programmation dynamique consiste en la résolution d’un problème avec la méthode "Diviser pour régner", à stocker les valeurs calculées au bout de la partie descendante. Comme ces calculs ont tendance à se répéter, on stocke les ces valeurs dans un tableau indexé et on les récupère au lieu de recalculer ces valeurs.
 
-\section{Binary Tree}
+\section{Structure de données : Arbres rouges-noirs}
 
-\subsection{Décrivez la structure des B-arbres : déclaration et invariant de données}
+\subsection{Quel est l'invariant de données d'un arbre RN ?}
+
+\begin{enumerate}
+	\item Un arbre RN est composé de noeud de couleur, ceux-ci sont rouges ou noir;
+	\item La racine est noir;
+	\item Les feuilles sont noires;
+	\item Un noeud rouge ne peut posséder que des enfants de couleur noir;
+	\item Pour chaque noeud de l'arbre, tous les chemins de celui-ci à une feuille contiennent le même nombre de noeuds noirs. 
+\end{enumerate}
+
+\subsection{démontrez que cet invariant implique que la hauteur d'un arbre RN est logarithmique par rapport au nombre d'éléments}
+
+Soit $h$ la hauteur de l'arbre RN. D'après la propriété 4, au moins la moitié des noeuds reliant la racine à une feuille, racine non comprise, doivent être noirs.
+
+Dès lors, la hauteur noire de la racine doit valoir, au moins, $h/2$, et donc :
+
+\begin{equation}
+	\begin{split}
+		n \geq 2^{h/2} - 1\\
+		n + 1 \geq 2^{h/2}\\
+		log(n + 1) \geq log(2^{h/2})\\
+		log(n + 1) \geq h/2\\
+		h \leq 2 log(n + 1) 
+	\end{split}
+\end{equation}
+
+\subsection{Donnez les idées principales de la procédure qui retire un élément et prouvez l'ordre de grandeur de son temps d'exécution}
+
+\paragraph{Suppression du noeud}
+
+\begin{itemize}
+	\item $z$ à un enfant gauche (ou droit) null : remplacer par l'enfant droit (ou gauche) de celui-ci
+	\item Aussi non, on fait un translation entre ne plus petit élément "droit" de $z$ et $z$
+\end{itemize}
+
+\paragraph{Correction de l'invariant de l'arbre}
+
+\begin{itemize}
+	\item Cas 1 : le frère de $x$, $w$ est rouge
+	\begin{itemize}
+		\item $w$ devient noir
+		\item $x.parent$ devient rouge
+		\item On effectue une rotation gauche sur $x.parent$
+	\end{itemize}
+	\item Cas 2 : le frère de $x$, $w$ est noir et ses deux enfants sont noirs
+	\begin{itemize}
+		\item $w$ devient rouge
+		\item $x = x.parent$
+		\begin{itemize}
+			\item Si $x$ est rouge, mettre $x$ en noir
+			\item Si $x$ est noir, regarder si on est dans le cas 1, 2, 3 ou 4
+		\end{itemize}
+	\end{itemize}
+	\item Cas 3 : le frère de $x$, $w$ est noir et l'enfant gauche de $w$ est rouge et l'enfant droit de $w$ est noir
+	\begin{itemize}
+		\item $w$ devient rouge
+		\item $w.left$ devient noir
+		\item On effectue une rotation droite
+		\item $w = x.parent.right$
+		\item On effectue le cas 4
+	\end{itemize}
+	\item Cas 4 : le frère de $x$, $w$, est noir et l'enfant de $w$ est rouge
+	\begin{itemize}
+		\item $w$ prend la couleur de $x.parent$
+		\item $x.parent$ devient noir
+		\item $w.right$ devient noir
+		\item On effectue un rotation gauche
+	\end{itemize}
+\end{itemize}
+
+Après tous les cas, on remet la racine en noir.
+
+Pour la suppression, nous avons les temps d'exécution suivant:
+
+\begin{itemize}
+	\item Pour la suppression en elle-même : $\mathcal{O}(log n)$ à cause de la recherche du plus petit élément de droit
+	\item Pour la correction de l'arbre, nous avons le risque de remonter le problème jusqu'à la racine et donc de , la aussi, parcourir l'ensemble d'une branche. Nous avons donc un temps $\mathcal{O}(log n)$
+\end{itemize}
+
+Le temps pour la suppression est donc logarithmique.
+
+\subsection{Quel est le nombre maximal de feuilles d'un arbre RN de hauteur $h$ donnée ?}
+
+Le nombre maximal de feuilles est d'un arbre parfait, il est donc : $2^{h+1}$. $h$ étant la hauteur d'une branche, la racine ayant pour valeur 0 et les feuilles n'étant pas comprise dedans.
+
+\subsection{Quel est le nombre maximal de feuilles d'un arbre binaire de hauteur $h$ donnée ?}
+
+Le nombre maximal de feuilles est celui d'un arbre parfait, il y a donc : $n = 2^h$. $h$ étant la hauteur d'une branche, la racine ayant pour valeur 0 et les feuilles étant comprise dedans.
+
+\subsection{Quel est le nombre minimal de feuilles d'un arbre RN de hauteur $h$ donnée ?}
+
+$2^{\frac{h+3}{2}} - 1 \leq p \leq 2^{h+1}$ donc $2^{\frac{h+3}{2}} - 1$ est le nombre minimale de feuilles pour une hauteur $h$.
+
+\subsection{Quel est le nombre minimal de feuilles d'un arbre binaire de hauteur $h$ donnée ?}
+
+Il y a minimum 1 feuilles, pour l'arbre binaire dégénéré, et ceci pour n'importe quelle valeur de h. 
+
+\subsection{Combien de pointeurs $null$ contient un arbre RN contenant $n$ valeurs ?}
+
+$p = n + 1$
+
+\subsection{Quel est le nombre maximal de noeuds intérieurs dans un arbre binaire de hauteur $h$ donnée ?}
+
+$h \leq n_{internes} \leq 2^h - 1$ 
+
+\subsection{Quel est le nombre minimal de noeuds intérieurs dans un arbre binaire de hauteur $h$ donnée ?}
+
+Le nombre minimal de noeud internes est $h - 1$
+
+\subsection{Qu'est-ce qu'une rotation gauche d'un arbre binaire ?}
+
+Il s'agit d'une opération de transformation d'arbre binaire qui préserve la propriété d'arbre binaire.
+Pour effectuer une rotation gauche autour d'un noeud $z$
+
+\begin{itemize}
+	\item Mettre $z.parent = z.right$
+	\item Mettre $t = z.right.left$, $z.right.left = z$, $z.right = t$
+\end{itemize} 
+
+\subsection{La rotation gauche d'un arbre RN est-elle un arbre RN ?}
+
+Non car une rotation modifie l'arbre et le résultat pourrait violer les propriétés d'un arbre RN. 
+
+\subsection{Quel est l'ordre de grandeur du temps d'une rotation ?}
+
+L'ordre de grandeur du temps de rotation est $\mathcal{O}(1)$ car elle modifie un nombre constant de pointeurs.
+
+\subsection{Expliquez comment rééquilibrer un arbre RN après une insertion}
+
+\begin{itemize}
+	\item Cas 1 : l'oncle $y$ de $z$ (l'élément ajouté) est rouge
+	\begin{itemize}
+		\item Mettre $z.parent$ et $y$ à noir
+		\item Mettre $z.parent.parent$ à rouge
+		\item Mettre $z.parent.parent$ en tant que nouveau $z$ et recommencer s'il y a toujours une violation
+	\end{itemize}
+	\item Cas 2 : l'oncle $y$ de $z$ est noir et $z$ est un fils droit
+	\begin{itemize}
+		\item On effectue une rotation gauche (sur $z$) pour passer dans le cas 3
+	\end{itemize}
+	\item Cas 3 : l'oncle $y$ de $z$ est noir et $z$ est un fils gauche
+	\begin{itemize}
+		\item On change la couleur de $z.parent^en noir$ et de $z.parent.parent$ en rouge
+		\item On effectue une rotation droite (sur $z.parent.parent$) 
+	\end{itemize}
+\end{itemize}
+
+\subsection{Quel est l'intérêt des arbres RN par rapport aux arbres binaires triés ? Prouvez une relation entre leur hauteur et leur nombre d'éléments}
+
+L'intérêt des arbres RN par rapport aux arbres binaires triés est la meilleur complexité qu'offre les arbres RN. En effet, pour un arbre binaire trié composé de $n$ noeuds, la hauteur $h$ est au pire $h = n - 1$, ce qui nous donne une complexité de l'ordre de $\mathcal{O}(n)$ pour le parcourir. Alors que pour un arbre RN composé de $n$ noeuds, la hauteur est au pire $h = 2log(n + 1)$ ce qui nous donne une complexité $\mathcal{O}(log(n))$ pour le parcourir.
+
+\subsection{Quels sont les pré- et post- de l'insertion dans un arbre RN ?}
+
+\paragraph{pre:} L'arbre est valide, les invariants sont donc respectés.
+\paragraph{post:} L'arbre est toujours valide, les invariants sont donc respectés et l'arbre contient en plus l'élément qui a été ajouté. 
+
+\subsection{Quels sont les pré- et post- de la suppression dans un arbre RN ?}
+
+\paragraph{pre:} L'arbre est valide, les invariants sont donc respectés.
+\paragraph{post:} L'arbre est toujours valide, les invariants sont donc respectés et l'arbre ne contient en plus l'élément qui a été supprimé si celui-ci existait.
+
+\subsection{Décrivez les arbres RN ? Quel type abstrait représentent-ils ?}
+
+Arbre RN est un arbre binaire de recherche $\rightarrow$ adapté à l'implémentation de type "dictionnaire". En particulier, l'indexation d'un grand nombre d'information (ex.: indexation des fichiers dans un O.S.)
+
+\subsection{Comment modifier un arbre RN pour représenter le type dictionnaire (map) ?}
+
+If suffit d'ajouter un second champ dans le noeud, représentant la valeur x associée à la clé $k$ dans le dictionnaire.
+
+\section{Stucture de données : AVL}
+
+\subsection{Quel est l'invariant de données d'un arbre AVL ?}
+
+Pour tout noeud interne, la hauteur du sous-arbre de gauche et de droite ne doit pas différer que d'un au plus.
+
+\begin{equation}
+	b(T) \in \{-1, 0, 1\}, avec\ b(T) = h(T.right) - h(T.left)
+\end{equation}
+\\
+$b(T)$ est le facteur d'équilibrage\\
+$h(T)$ calcule la hauteur de l'arbre
+
+\subsection{Donner les étapes de l'insertion dans un arbre AVL}
+
+L'insertion se passe comme dans un BST, mais l'arbre doit ensuite être rééquilibré.
+
+\begin{itemize}
+	\item Cas gauche-gauche : $n_1$ est trop déséquilibré à gauche et son enfant gauche est également déséquilibré à gauche : un rotation droite de $n_1$ suffit.
+	\item Cas gauche-droite : $n_1$ est trop déséquilibre à gauche et son enfant gauche est déséquilibré à droite : on effectue une rotation gauche sur $n_1.left$ avant d'effectuer une rotation droite sur $n_1$ 
+	\item Cas droite-droite : $n_1$ est trop déséquilibré à droite et son enfant droite est également trop déséquilibré à droite : une rotation gauche de $n_1$ suffit.
+	\item Cas droite-gauche : $n_1$ est trop déséquilibré à droite et son enfant droite est déséquilibré à gauche : on effectue un rotation droite sur $n_1.right$ avant d'effectuer une rotation gauche sur $n_1$
+\end{itemize}
+
+\subsection{Donner les étapes de la suppression dans un arbre AVL}
+
+La suppression se passe comme dans un BST, mais la suppression d'un noeud peut déséquilibrer l'arbre. Le rééquilibrage se passe comme pour l'insertion.
+
+\begin{itemize}
+	\item Cas gauche-gauche : $n_1$ est trop déséquilibré à gauche et son enfant gauche est également déséquilibré à gauche : une rotation droite sur $n_1$ suffit.
+	\item Cas gauche-droite : $n_1$ est trop déséquilibré à gauche et son enfant gauche et déséquilibré à droite : on effectue une rotation gauche sur $n_1.left$ avant d'effectuer une rotation gauche sur $n_1$
+	\item Cas droite-droite : $n_1$ est trop déséquilibré à droite et son enfant droite est également déséquilibré à droite : un rotation gauche de $n_1$ suffit
+	\item Cas droite-gauche : $n_1$ est trop déséquilibré à droite et son enfant droite est déséquilibré à gauche : on effectue une rotation droite sur $n_1.right$ avant d'effectuer une rotation gauche sur $n_1$
+\end{itemize}
+
+\subsection{Donnez le nombre de noeuds externes pour un AVL}
+
+\begin{equation}
+	f(h + 1) \leq c \leq 2^{h+1}
+\end{equation}
+
+\subsection{Donnez le nombre de noeuds internes pour un AVL}
+
+\begin{equation}
+	f(h + 2) - 1 \leq q \leq 2^h - 1  
+\end{equation}
+
+\subsection{Donnez la hauteur $h$ à partir du nombre de noeuds $n$}
+
+\begin{equation}
+	log_2{(n + 1)} \leq h \leq 1.44 log_2{(n + 1)}
+\end{equation}
 
 \end{document}
