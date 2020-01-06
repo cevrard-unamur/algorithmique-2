@@ -396,6 +396,21 @@ La suppression se passe comme dans un BST, mais la suppression d'un noeud peut d
 
 \subsection{Donnez la hauteur $h$ à partir du nombre de noeuds $n$}
 
+On sait que l'arbre AVL le plus déséquilibré est tel que tout au long de l'arbre, l'un des fils est systématiquement plus haut de 1 par rapport à l'autre. On peut donc caractériser le nombre de noeud en fonction d'un h donné comme suit : $N(h) = 1 + N(h-1) + N(h-2)$.
+
+C'est ce que l'on nomme un arbre de Fibonacci.
+Dès lors, on a : 
+
+\begin{equation}
+	\begin{split}
+		N(h) = 1 +N(h-1) + N(h-2)\\
+		N(h) > 1 + 2N(h-2)\\
+		N(h) > \mathcal{O}(2^{(h/2)})\\
+		h/2 < log n\\
+		h < 2 log n
+	\end{split}
+\end{equation}
+
 \begin{equation}
 	log_2{(n + 1)} \leq h \leq 1.44 log_2{(n + 1)}
 \end{equation}
