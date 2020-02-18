@@ -49,7 +49,7 @@ Un invariant de boucle désigne une propriété vraie en début de boucle et en 
 \begin{enumerate}
 	\item de l’implication $P' \Rightarrow I$ (où $P'$ est la précondition avant l’entrée dans la boucle),
 	\item de l'implication $sp(S, I \land B) \Rightarrow I$ (un passage dans la boucle rétabli l'invariant)
-	\item de l'implication $I \land \lnot B \Rightarrow Q'$ (pu $Q'$ est la postcondition à la sortie de la boucle, autrement dit, ce que la boucle est censée faire)
+	\item de l'implication $I \land \lnot B \Rightarrow Q'$ (où $Q'$ est la post-condition à la sortie de la boucle, autrement dit, ce que la boucle est censée faire)
 \end{enumerate}
 
 \subsection{Qu'est-ce qu'un invariant de données ? Quand faut-il le prouver ou le supposer ?}
@@ -155,7 +155,7 @@ Sachant que la liste est triée, nous n'avons pas à recommencer la lecture de l
 
 \subsection{Expliquer le principe de la méthode "générer et tester"}
 
-Il s’agit de générer toutes les solutions jusqu’à obtenir celle possédant la propriété recherchée. Pour être sur de bien générer toutes les solutions possibles, la méthode dire de séparation et évaluation se base sur le principe de séparer (de manière récursive) le problème en sous-problèmes de cardinalités inférieures (en imposant des contraintes supplémentaires), tant que la résolution de ceux-ci reste difficile
+Il s’agit de générer toutes les solutions jusqu’à obtenir celle possédant la propriété recherchée. Pour être sur de bien générer toutes les solutions possibles, la méthode dite de séparation et évaluation se base sur le principe de séparer (de manière récursive) le problème en sous-problèmes de cardinalités inférieures (en imposant des contraintes supplémentaires), tant que la résolution de ceux-ci reste difficile
 
 \subsection{Supposons qu'on ajoute dans chaque noeud d'un arbre binaire trié, un champ contenant le nombre d'élément dans le sous-arbre correspondant. Faut-il changer la fonction d'abstraction et/ou l'invariant de données ?}
 
@@ -176,6 +176,15 @@ Si $n \in N$, deux approches sont possibles:
 
 La programmation dynamique consiste en la résolution d’un problème avec la méthode "Diviser pour régner", à stocker les valeurs calculées au bout de la partie descendante. Comme ces calculs ont tendance à se répéter, on stocke les ces valeurs dans un tableau indexé et on les récupère au lieu de recalculer ces valeurs.
 
+\subsection{Quels sont les manières de parcourir un arbre ?}
+
+\begin{enumerate}
+	\item Infixe (dans l'ordre) : un noeud est visité après son fils gauche et avant son fils droit
+	\item Préfixe (en pré-ordre) : chaque noeud est visité avant ses enfants
+	\item Suffixe (en post-ordre) : chaque noeud est visité après ses enfants
+	\item En largeur : tous les noeuds d'un même niveau sont visités avant les suivants.
+\end{enumerate}
+
 \section{Structure de données : Arbres rouges-noirs}
 
 \subsection{Quel est l'invariant de données d'un arbre RN ?}
@@ -188,7 +197,7 @@ La programmation dynamique consiste en la résolution d’un problème avec la m
 	\item Pour chaque noeud de l'arbre, tous les chemins de celui-ci à une feuille contiennent le même nombre de noeuds noirs. 
 \end{enumerate}
 
-\subsection{démontrez que cet invariant implique que la hauteur d'un arbre RN est logarithmique par rapport au nombre d'éléments}
+\subsection{Démontrez que cet invariant implique que la hauteur d'un arbre RN est logarithmique par rapport au nombre d'éléments}
 
 Soit $h$ la hauteur de l'arbre RN. D'après la propriété 4, au moins la moitié des noeuds reliant la racine à une feuille, racine non comprise, doivent être noirs.
 
@@ -210,7 +219,7 @@ Dès lors, la hauteur noire de la racine doit valoir, au moins, $h/2$, et donc :
 
 \begin{itemize}
 	\item $z$ à un enfant gauche (ou droit) null : remplacer par l'enfant droit (ou gauche) de celui-ci
-	\item Aussi non, on fait un translation entre ne plus petit élément "droit" de $z$ et $z$
+	\item Sinon, on fait un translation entre le plus petit élément "droit" de $z$ et $z$ (attention si l'élément choisi est enfant direct de $z$).
 \end{itemize}
 
 \paragraph{Correction de l'invariant de l'arbre}
@@ -261,7 +270,7 @@ Le temps pour la suppression est donc logarithmique.
 
 \subsection{Quel est le nombre maximal de feuilles d'un arbre RN de hauteur $h$ donnée ?}
 
-Le nombre maximal de feuilles est d'un arbre parfait, il est donc : $2^{h+1}$. $h$ étant la hauteur d'une branche, la racine ayant pour valeur 0 et les feuilles n'étant pas comprise dedans.
+Le nombre maximal de feuilles est celui d'un arbre parfait, il est donc : $n = 2^{h+1}$. $h$ étant la hauteur d'une branche, la racine ayant pour valeur 0 et les feuilles (pointeur $null$) n'étant pas comprise dedans.
 
 \subsection{Quel est le nombre maximal de feuilles d'un arbre binaire de hauteur $h$ donnée ?}
 
@@ -281,7 +290,7 @@ $p = n + 1$
 
 \subsection{Quel est le nombre maximal de noeuds intérieurs dans un arbre binaire de hauteur $h$ donnée ?}
 
-$h \leq n_{internes} \leq 2^h - 1$ 
+$h - 1 \leq n_{internes} \leq 2^h - 1$ 
 
 \subsection{Quel est le nombre minimal de noeuds intérieurs dans un arbre binaire de hauteur $h$ donnée ?}
 
